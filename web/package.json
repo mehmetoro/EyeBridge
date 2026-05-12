@@ -10,8 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
+=======
+    "@supabase/supabase-js": "^2.105.4",
+    "i18next": "^26.1.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-i18next": "^17.0.7",
+    "webgazer": "^3.5.3"
+>>>>>>> fb73d5308d231c707b560c5be8dc80375a7af1d3
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

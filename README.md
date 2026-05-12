@@ -22,7 +22,7 @@ EyeBridge is a **zero-cost**, **open-source** platform that enables bedridden pa
 
 ## Zero Cost. Zero Hardware. Open Source.
 
-- No expensive eye-tracking devices (Tobii, etc.)
+- No expensive eye-tracking devices 
 - No special sensors or armbands
 - Just a computer/tablet with a webcam
 

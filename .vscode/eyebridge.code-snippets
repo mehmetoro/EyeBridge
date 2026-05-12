@@ -1,0 +1,64 @@
+{
+  "EyeBridge Göz Butonu": {
+    "prefix": "eyebtn",
+    "body": [
+      "<EyeButton",
+      "  onBlink={() => ${1:handleBlink}}",
+      "  isFocused={${2:isFocused}}",
+      ">",
+      "  ${3:Buton Metni}",
+      "</EyeButton>"
+    ],
+    "description": "EyeBridge projesi için göz tabanlı buton"
+  },
+  "EyeBridge Sanal Tuş": {
+    "prefix": "eyekey",
+    "body": [
+      "<VirtualKey",
+      "  letter=\"${1:A}\"",
+      "  onSelect={() => ${2:addLetter('A')}}",
+      "  isFocused={${3:isFocused}}",
+      "/>"
+    ],
+    "description": "Sanal klavye tuşu"
+  },
+  "EyeBridge Göz Takibi Hook": {
+    "prefix": "eyehook",
+    "body": [
+      "const { gazeData, isBlinking, startTracking, stopTracking } = useEyeTracking();",
+      "",
+      "useEffect(() => {",
+      "  startTracking();",
+      "  return () => stopTracking();",
+      "}, []);"
+    ],
+    "description": "Göz takibi hook'u"
+  },
+  "EyeBridge Sayfa Şablonu": {
+    "prefix": "eyepage",
+    "body": [
+      "import React, { useEffect, useState } from 'react';",
+      "import { useEyeTracking } from '../hooks/useEyeTracking';",
+      "",
+      "const ${1:PageName} = () => {",
+      "  const { gazeData, isBlinking } = useEyeTracking();",
+      "  ",
+      "  useEffect(() => {",
+      "    if (isBlinking) {",
+      "      // Göz kırpma algılandı",
+      "      ${2:handleBlink}",
+      "    }",
+      "  }, [isBlinking]);",
+      "  ",
+      "  return (",
+      "    <div className=\"eyebridge-page\">",
+      "      ${3:/* Sayfa içeriği */}",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:PageName};"
+    ],
+    "description": "EyeBridge sayfa şablonu"
+  }
+}

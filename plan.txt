@@ -1,0 +1,446 @@
+👁️ EyeBridge - Kapsamlı Teknik Plan
+1. Proje Vizyonu ve Hikaye
+EyeBridge (Gözbebeğim), yoğun bakımda entübe olmuş, konuşamayan, hareket edemeyen ama gözleriyle iletişim kurabilen hastalar için sıfır maliyetli, sadece web kamerası ile çalışan bir göz takipli iletişim ve sosyal dayanışma platformudur.
+
+Hikaye: Yoğun bakımda bir hasta düşün. Entübe, konuşamıyor, elleri bağlı. Ziyaretçisi geliyor, iki kelam edemiyor. Sadece gözleri ile derdini anlatamıyor. EyeBridge, o hastaya "Ben buradayım, derdimi anlatabiliyorum, ailemle konuşabiliyorum, hatta başka hastalarla dertleşebiliyorum, oyun oynayabiliyorum" demeyi amaçlıyor. Tamamen ücretsiz, tamamen açık kaynak.
+
+2. Kullanıcı Hikayeleri (User Stories)
+2.1. Hasta
+Gözlerimle sanal klavyede harfleri seçip yazı yazabilmeliyim.
+
+Yazdığım metin sesli olarak okunmalı (TTS).
+
+Mesajlarım otomatik olarak başka dillere çevrilmeli.
+
+Diğer hastalarla mesajlaşabilmeli, paylaşım yapabilmeliyim.
+
+Oyun oynayabilmeli, grup oyunlarına katılabilmeliyim.
+
+Yardımlaştıkça puan kazanmalı, seviye atlamalıyım.
+
+Kendi dilimde klavye kullanabilmeliyim (Türkçe'de 'ğ', 'ü', 'ı' vb. olmalı).
+
+2.2. Hasta Yakını / Ziyaretçi
+Hastamla mesajlaşabilmeli, onun yazdıklarını okuyabilmeliyim.
+
+Hastamın moralini yükseltecek mesajlar gönderebilmeliyim.
+
+Hastamın aktivitelerini (yazdığı mesajlar, oynadığı oyunlar, kazandığı rozetler) görebilmeliyim.
+
+2.3. Geliştirici / Topluluk
+Projeye yeni oyunlar ekleyebilmeliyim.
+
+Yeni dil ve klavye düzeni ekleyebilmeliyim.
+
+Göz takibi algoritmasını iyileştirebilmeliyim.
+
+3. Teknik Altyapı (Özet)
+Katman	Teknoloji	Açıklama
+Frontend	React 18 + Vite	Web uygulaması
+Hosting	Vercel (Hobby)	Ücretsiz, GitHub entegre
+Veritabanı	Supabase (Asya-Singapur)	PostgreSQL, Auth, Realtime
+Göz Takibi	WebGazer.js	Kameradan göz pozisyonu ve kırpma
+Seslendirme	Web Speech API	Tarayıcıda TTS
+Çeviri	LibreTranslate (Hugging Face)	6 dil: en, tr, de, es, fr, ru
+Depo	GitHub (public)	Açık kaynak
+4. Etkileşim Yöntemleri (Sadece Göz ile!)
+4.1. Göz Kırpma (Blink)
+Kısa kırpma (300-500ms): Tıklama / Seçme.
+
+Uzun kırpma (1000ms+): Özel işlevler (ör. menü açma).
+
+Görsel geri bildirim: Ekran kenarı yeşil yanıp söner.
+
+Sesli geri bildirim: Kısa "bip".
+
+4.2. Üzerinde Durarak Tıklama (Dwell Click)
+Kullanıcı bir elementin üzerinde 2 saniye sabit bakarsa, otomatik tıklanır.
+
+İlerleme çubuğu görünür (dairesel veya çizgi).
+
+Kullanıcı ayarlarından süre değiştirilebilir (1-3 saniye).
+
+4.3. Bakış (Gaze) ile Gezinme
+İmleç yok! Bakılan element yeşil çerçeve ile vurgulanır.
+
+Çerçeve kalın (4px) ve yüksek kontrastlı.
+
+Çerçeve, kullanıcının kaybettiği durumlarda (örn. gözlerini kapattığında) kaybolur.
+
+5. Modüller ve Özellikler
+5.1. Sanal Klavye (Virtual Keyboard)
+Özellikler: Her dil için ayrı düzen (QWERTY, QWERTZ, Kiril, Türkçe Q/F).
+
+Tuşlar: A-Z, 0-9, noktalama, BOŞLUK, GERİ AL (⌫), ENTER (↩).
+
+Boyut: Her tuş minimum 80x80px, aralarında 20px boşluk.
+
+Davranış: Üzerinde durarak tıklama (2 saniye) veya göz kırpma ile seçim.
+
+Sesli Geri Bildirim: Her harf seçiminde harf ismi okunur (isteğe bağlı).
+
+5.2. Mesajlaşma (Messaging)
+Birebir mesajlaşma: Hasta-hasta, hasta-yakını.
+
+Çeviri: Gönderilen mesaj otomatik olarak alıcının tercih ettiği dile çevrilir.
+
+Veritabanı: messages tablosu (sender_id, receiver_id, original_text, original_language, translated_text, created_at).
+
+Realtime: Supabase Realtime ile anında iletişim.
+
+5.3. Paylaşım ve Sosyal Ağ (Feed)
+Paylaşım yapma: Hasta yazdığı bir mesajı herkese açık olarak paylaşabilir.
+
+Yorum yapma: Paylaşımlara yorum yazılabilir.
+
+Beğeni / Tepki: Paylaşımlara emoji ile tepki verilebilir (👍, ❤️, 😢, vb.).
+
+Gündem: En çok etkileşim alan paylaşımlar ana sayfada gösterilir.
+
+5.4. Oyun Bölümü (Games)
+Oyunların Özellikleri: Her oyun sadece göz kırpma ve bakış ile oynanabilir.
+
+Oyunlar şunları içerir:
+
+Hedef Vurma: Ekranda beliren hedeflere bakıp göz kırparak puan toplama.
+
+Hafıza Kartları: Kartlara bakıp çiftleri eşleştirme.
+
+Balon Patlatma: Ekranda yükselen balonlara bakıp kırparak patlatma.
+
+Labirent: Göz hareketleriyle bir topu labirentte yönlendirme.
+
+Grup Oyunları: Aynı odadaki hastalar aynı oyunu oynayabilir (sırayla veya yarışmalı).
+
+Topluluk Oyunları: Geliştiriciler yeni oyunlar ekleyebilir (/games klasörüne eklenir, otomatik keşfedilir).
+
+5.5. Puan, Rozet ve Seviye Sistemi (Gamification)
+5.5.1. Puanlama (XP)
+Eylem	XP
+Harf seçmek	1 XP
+Mesaj göndermek	5 XP
+Paylaşım yapmak	10 XP
+Bir paylaşıma yorum yapmak	3 XP
+Bir paylaşımı beğenmek	1 XP
+Bir oyunda puan almak	oyuna göre değişir
+Başka bir hastaya yardım etmek (sorusunu yanıtlamak)	15 XP
+Yeni bir rozet kazanmak	50 XP
+5.5.2. Seviyeler (Levels)
+Seviye	XP Aralığı	Rozet Rengi
+Yeni Fidan	0-99 XP	🟫 Kahverengi
+Başlangıç	100-499 XP	⚪ Gri
+Aktif	500-1499 XP	🟢 Yeşil
+Tecrübeli	1500-4999 XP	🔵 Mavi
+Uzman	5000-9999 XP	🟠 Turuncu
+Bilge	10000+ XP	🟣 Mor
+5.5.3. Rozetler (Badges)
+Rozet	Koşul
+İlk Harf	İlk kez bir harf seçmek
+İlk Mesaj	İlk kez mesaj göndermek
+Konuşkan	10 mesaj göndermek
+Yardımsever	5 hastaya yardım etmek
+Dil Sihirbazı	Farklı 3 dilde mesaj almak/göndermek
+Oyun Sever	3 farklı oyun oynamak
+Takım Oyuncusu	Bir grup oyununda takımıyla kazanmak
+Paylaşımcı	5 paylaşım yapmak
+Yılın Hastası	30 gün üst üste giriş yapmak
+5.6. Hasta Yakını / Ziyaretçi Paneli
+Aile Bağlantısı: Hasta, yakınını "aile" olarak ekleyebilir.
+
+Mesajlaşma: Aile üyeleri hasta ile mesajlaşabilir (çeviri destekli).
+
+Takip: Hasta yakınları, hastanın son aktivitelerini, yazdığı mesajları ve kazandığı rozetleri görebilir.
+
+Uyarılar: Hasta belirli bir süre aktif olmazsa (ör. 12 saat) sisteme uyarı gider.
+
+6. Veritabanı Şeması (Supabase)
+sql
+-- users tablosu (Supabase Auth ile entegre)
+CREATE TABLE users (
+  id UUID PRIMARY KEY REFERENCES auth.users(id),
+  email TEXT UNIQUE,
+  full_name TEXT,
+  preferred_language TEXT DEFAULT 'en',
+  known_languages TEXT[] DEFAULT ARRAY['en'],
+  total_xp INTEGER DEFAULT 0,
+  level TEXT DEFAULT 'Yeni Fidan',
+  role TEXT DEFAULT 'patient', -- 'patient', 'family', 'doctor'
+  family_id UUID, -- kendi kendine referans (aile bağlantısı)
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- messages tablosu
+CREATE TABLE messages (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  sender_id UUID REFERENCES users(id),
+  receiver_id UUID REFERENCES users(id),
+  original_text TEXT NOT NULL,
+  original_language TEXT NOT NULL,
+  translated_text TEXT,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- posts tablosu (sosyal paylaşımlar)
+CREATE TABLE posts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id),
+  content TEXT NOT NULL,
+  language TEXT DEFAULT 'en',
+  likes INTEGER DEFAULT 0,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- comments tablosu
+CREATE TABLE comments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  post_id UUID REFERENCES posts(id),
+  user_id UUID REFERENCES users(id),
+  content TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- likes tablosu
+CREATE TABLE likes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  post_id UUID REFERENCES posts(id),
+  user_id UUID REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- badges tablosu
+CREATE TABLE badges (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT UNIQUE NOT NULL,
+  description TEXT,
+  icon TEXT
+);
+
+-- user_badges tablosu (kazanılan rozetler)
+CREATE TABLE user_badges (
+  user_id UUID REFERENCES users(id),
+  badge_id UUID REFERENCES badges(id),
+  earned_at TIMESTAMP DEFAULT NOW(),
+  PRIMARY KEY (user_id, badge_id)
+);
+
+-- scores tablosu (XP geçmişi)
+CREATE TABLE scores (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id),
+  action_type TEXT NOT NULL,
+  xp_gained INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- games tablosu
+CREATE TABLE games (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  description TEXT,
+  url TEXT, -- oyun dosyasının yolu
+  is_group BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- game_scores tablosu (oyun puanları)
+CREATE TABLE game_scores (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id),
+  game_id UUID REFERENCES games(id),
+  score INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+7. UI/UX Kuralları (Copilot Skill)
+ASLA fare tıklaması (onClick, onMouseDown) veya hover kullanma.
+
+ASLA küçük butonlar kullanma (minimum 80x80px).
+
+Göz kırpma = Tıklama (data-blink-action attribute'ü zorunlu).
+
+Üzerinde durarak tıklama (dwell click) için süre 2 saniye, ilerleme çubuğu göster.
+
+Sesli geri bildirim her tıklamada kısa bir "bip" sesi.
+
+Görsel geri bildirim: Seçim anında ekran kenarı yeşil yanıp söner, odaklanan elementin çerçevesi yeşil olur.
+
+Yazılar: Metinler 28px+, başlıklar 48px+, sans-serif font.
+
+Renkler: Arkaplan siyah (#000000), metin beyaz (#FFFFFF), odak çerçevesi yeşil (#00FF00), hata kırmızı (#FF0000).
+
+8. API ve Servisler
+8.1. Göz Takibi (WebGazer.js)
+javascript
+// Başlat
+webgazer.setRegression('ridge')
+  .setTracker('clmtrackr')
+  .begin();
+
+// Olayları dinle
+webgazer.setGazeListener((data, timestamp) => {
+  if (data) {
+    const x = data.x; // bakılan x koordinatı
+    const y = data.y; // bakılan y koordinatı
+  }
+});
+8.2. Çeviri (LibreTranslate)
+javascript
+const translate = async (text, source, target) => {
+  const res = await fetch('https://mehmetoro-eyebridge-translate.hf.space/translate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ q: text, source, target, format: 'text' })
+  });
+  const data = await res.json();
+  return data.translatedText;
+};
+8.3. Seslendirme (Web Speech API)
+javascript
+const speak = (text, lang = 'tr-TR') => {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  window.speechSynthesis.speak(utterance);
+};
+8.4. Supabase Realtime (Anlık mesajlaşma)
+javascript
+const subscription = supabase
+  .channel('messages')
+  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, handleNewMessage)
+  .subscribe();
+9. Klasör Yapısı (GitHub)
+text
+EyeBridge/
+├── web/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── VirtualKeyboard.jsx
+│   │   │   ├── EyeButton.jsx
+│   │   │   ├── MessageList.jsx
+│   │   │   ├── PostFeed.jsx
+│   │   │   ├── GameList.jsx
+│   │   │   └── BadgeCard.jsx
+│   │   ├── hooks/
+│   │   │   └── useEyeTracking.js
+│   │   ├── i18n/
+│   │   │   ├── locales/
+│   │   │   └── keyboards/
+│   │   ├── lib/
+│   │   │   ├── supabaseClient.js
+│   │   │   └── translate.js
+│   │   ├── pages/
+│   │   │   ├── KeyboardPage.jsx
+│   │   │   ├── MessagesPage.jsx
+│   │   │   ├── FeedPage.jsx
+│   │   │   ├── GamesPage.jsx
+│   │   │   └── ProfilePage.jsx
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+├── games/                      (topluluk oyunları buraya eklenir)
+├── supabase/
+│   └── migrations/
+├── docs/
+├── .github/
+│   └── copilot-instructions.md
+└── vercel.json
+10. MVP (Minimum Viable Product) - İlk Sürüm Özellikleri
+✅ Göz takibi ve göz kırpma ile sanal klavye.
+
+✅ Basit mesajlaşma (hasta-hasta).
+
+✅ Otomatik çeviri (6 dil).
+
+✅ 1 basit oyun (Balon Patlatma).
+
+✅ Puan ve seviye sistemi.
+
+✅ Sesli geri bildirim.
+
+11. Gelecek Sürümler (Yol Haritası)
+Sürüm	Özellikler
+v2.0	Sosyal paylaşım akışı (feed), yorumlar, beğeniler
+v3.0	Grup oyunları, hasta yakını paneli
+v4.0	Topluluk oyun geliştirme SDK'sı, daha fazla dil
+v5.0	Yapay zeka ile göz takibi iyileştirmesi (MediaPipe)
+
+13. Etkilesim Standardi ve Skill Sistemi
+
+EyeBridge bundan sonraki gelisiminde iki katmanli bir davranis mimarisi izler:
+
+- Temel gaze motoru: ortak kamera, gaze, blink, dwell, genel manuel ve otomatik kalibrasyon
+- Baglama ozel profile sistemi: klavye, genel sayfa, sosyal ve oyun kalibrasyonlari
+
+13.1. Skill Seti
+
+- Gaze Targeting: Kullanici hedefin tam ortasini vurmak zorunda kalmaz.
+- Sticky Focus: Kullanici hedefe yaklastiginda odak hedefe tutunur.
+- Blink Activation: Asil secim gaze + blink/dwell mantigi ile olur.
+- Context Calibration: Her baglam kendi kalibrasyon verisini kullanabilir.
+- Standard Layout Memory: Sayfa degisse bile kontrol cografyasi bozulmaz.
+- Low-Cognitive Navigation: Az sayida, buyuk, uzak, sabit kontrol noktasi kullanilir.
+
+13.2. Kalibrasyon Profilleri
+
+- Global Automatic Calibration
+- Global Manual Calibration
+- Keyboard Calibration
+- Page Navigation Calibration
+- Social Calibration
+- Game Calibration
+
+13.3. Uygulama Sirasi
+
+1. Mevcut genel manuel/otomatik kalibrasyon korunur.
+2. Kalibrasyon profil altyapisi kurulur.
+3. Klavye kalibrasyonu ilk baglama ozel profil olarak eklenir.
+4. Standart genel sayfa bolgesi iskeleti kurulur.
+5. Sosyal kalibrasyon ve sosyal akis yapisi eklenir.
+6. Oyun kalibrasyonu ve oyun standardi eklenir.
+
+13.4. Standart Sayfa Bolgeleri
+
+- Sol ust: geri/cikis
+- Sag ust: ana menu/ana aksiyon
+- Sol alt: onceki
+- Sag alt: sonraki
+- Alt orta: asagi kaydir
+- Alt orta ustu: yukari kaydir
+- Orta sag: onay/devam
+- Orta sol: iptal/geri
+
+13.5. Acik Kaynak Kurali
+
+Ozellikle oyun gelistiricileri ve sayfa ekleyen katkicilar, bu standarda uymak zorundadir. Standart disi etkilesim tasarimi kabul edilmez. Ayrintili tanim docs/INTERACTION_STANDARD.md dosyasinda tutulur.
+
+13.6. Cok Dilli Disa Acik Sayfa Kurali
+
+- Disa acik her sayfa `tr`, `en`, `de`, `es`, `fr`, `ru` dillerinde yayinlanir.
+- Yeni sayfa, yeni oyun arayuzu veya yeni sosyal modul tek dilde eklenmez.
+- Tum sabit UI metinleri 6 dilin tamamini icermelidir.
+- Gelistirici dokumanlari ve plan dosyalari Turkce + Ingilizce iki dilli tutulur.
+- Global topluluk katkisi icin bu dil katmani zorunlu proje standardidir.
+
+13.7. English Summary for Global Contributors
+
+EyeBridge will follow a dual-language documentation model and a six-language product UI model.
+
+- Developer-facing documentation and planning files must remain bilingual in Turkish and English.
+- Public-facing pages must support `tr`, `en`, `de`, `es`, `fr`, and `ru`.
+- Calibration is profile-based: global, keyboard, page navigation, social, and game.
+- Sticky focus is a core interaction skill and must be preserved across all new modules.
+- Open-source contributors, especially game developers, must follow the interaction standard in docs/INTERACTION_STANDARD.md.
+12. Başarı Kriterleri (Proje Tamamlandığında)
+Bir hasta, gözleriyle ilk kez "Merhaba" yazabildiğinde.
+
+Bir Türk hasta, bir İspanyol hastayla kendi dilinde mesajlaştığında.
+
+Bir geliştirici, GitHub üzerinden yeni bir oyun eklediğinde.
+
+Proje GitHub'da 100 yıldıza ulaştığında.
+
+Bir hasta yakını, hastasının yazdığı bir paylaşımı gördüğünde ve ona yorum yaptığında.
+
+Bir hastane veya dernek, EyeBridge'i resmi olarak kullanmaya başladığında.

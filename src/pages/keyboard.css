@@ -1,0 +1,192 @@
+.surface-screen-keyboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 6px;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.surface-screen-keyboard .keyboard-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  padding: 0;
+  min-height: 0;
+}
+
+.surface-screen-keyboard .keyboard-text-area {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #00ff00;
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+}
+
+.surface-screen-keyboard .keyboard-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  font-weight: bold;
+  color: #000;
+  padding: 4px;
+  font-family: Arial, sans-serif;
+}
+
+.surface-screen-keyboard .keyboard-input:focus {
+  outline: none;
+}
+
+.surface-screen-keyboard .keyboard-input::placeholder {
+  color: #999;
+}
+
+.surface-screen-keyboard .keyboard-tools {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 6px;
+}
+
+.surface-screen-keyboard .keyboard-dwell-panel {
+  min-height: 80px;
+  padding: 8px;
+  border: 1px solid rgba(31, 91, 175, 0.18);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 247, 255, 0.95) 100%);
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 6px;
+  align-content: center;
+}
+
+.surface-screen-keyboard .keyboard-dwell-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-strong);
+  text-align: center;
+  line-height: 1;
+}
+
+.surface-screen-keyboard .keyboard-dwell-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(80px, 1fr));
+  gap: 6px;
+}
+
+.surface-screen-keyboard .keyboard-dwell-button {
+  min-width: 80px;
+  min-height: 80px;
+  border: 1px solid rgba(31, 91, 175, 0.18);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 247, 255, 0.95) 100%);
+  color: var(--text-strong);
+  font-size: 24px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+.surface-screen-keyboard .keyboard-home-button {
+  min-width: 80px;
+  min-height: 80px;
+  padding: 8px;
+  font-size: 32px;
+  border: 1px solid rgba(31, 91, 175, 0.18);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 247, 255, 0.95) 100%);
+  color: var(--text-strong);
+  font-weight: bold;
+}
+
+.surface-screen-keyboard .keyboard-home-button.is-focused,
+.surface-screen-keyboard .keyboard-dwell-button.is-focused {
+  border: 5px solid #00ff00;
+  box-shadow: 0 0 12px #00ff00;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 247, 255, 0.95) 100%);
+}
+
+.surface-screen-keyboard .keyboard-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+}
+
+.surface-screen-keyboard .keyboard-board {
+  display: grid;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.surface-screen-keyboard .key-row-board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 6px;
+  width: 100%;
+  min-height: 0;
+}
+
+.surface-screen-keyboard .keyboard-board-key {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  padding: 8px;
+  font-size: clamp(24px, 1.8vw, 34px);
+  border: 1px solid rgba(31, 91, 175, 0.18);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 247, 255, 0.95) 100%);
+  color: var(--text-strong);
+  font-weight: bold;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.surface-screen-keyboard .keyboard-board-key.is-focused {
+  border: 5px solid #00ff00;
+  box-shadow: 0 0 12px #00ff00;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 247, 255, 0.95) 100%);
+  color: var(--text-strong);
+}
+
+.surface-screen-keyboard .keyboard-board-key.is-wide {
+  min-width: 0;
+}
+
+@media (max-width: 980px) {
+  .surface-screen-keyboard .keyboard-header {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .surface-screen-keyboard .keyboard-tools {
+    grid-template-columns: 1fr 1fr 80px;
+  }
+
+  .surface-screen-keyboard .keyboard-home-button {
+    min-width: 80px;
+    min-height: 80px;
+    font-size: 28px;
+  }
+
+  .surface-screen-keyboard .keyboard-dwell-value {
+    font-size: 22px;
+  }
+
+  .surface-screen-keyboard .keyboard-board-key {
+    font-size: 28px;
+  }
+}
+
+
+

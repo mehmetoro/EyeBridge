@@ -1,0 +1,128 @@
+{
+  "EyeBridge Göz Butonu": {
+    "prefix": "eyebtn",
+    "body": [
+      "<EyeButton",
+      "  onBlink={() => ${1:handleBlink}}",
+<<<<<<< HEAD
+      "  isFocused={${2:isFocused}}",
+=======
+      "  gazeData={${2:gazeData}}",
+>>>>>>> fb73d5308d231c707b560c5be8dc80375a7af1d3
+      ">",
+      "  ${3:Buton Metni}",
+      "</EyeButton>"
+    ],
+    "description": "EyeBridge projesi için göz tabanlı buton"
+  },
+  "EyeBridge Sanal Tuş": {
+    "prefix": "eyekey",
+    "body": [
+      "<VirtualKey",
+      "  letter=\"${1:A}\"",
+      "  onSelect={() => ${2:addLetter('A')}}",
+<<<<<<< HEAD
+      "  isFocused={${3:isFocused}}",
+=======
+      "  gazeData={gazeData}",
+>>>>>>> fb73d5308d231c707b560c5be8dc80375a7af1d3
+      "/>"
+    ],
+    "description": "Sanal klavye tuşu"
+  },
+  "EyeBridge Göz Takibi Hook": {
+    "prefix": "eyehook",
+    "body": [
+      "const { gazeData, isBlinking, startTracking, stopTracking } = useEyeTracking();",
+      "",
+      "useEffect(() => {",
+      "  startTracking();",
+      "  return () => stopTracking();",
+      "}, []);"
+    ],
+    "description": "Göz takibi hook'u"
+  },
+<<<<<<< HEAD
+  "EyeBridge Sayfa Şablonu": {
+    "prefix": "eyepage",
+    "body": [
+      "import React, { useEffect, useState } from 'react';",
+      "import { useEyeTracking } from '../hooks/useEyeTracking';",
+      "",
+      "const ${1:PageName} = () => {",
+      "  const { gazeData, isBlinking } = useEyeTracking();",
+      "  ",
+      "  useEffect(() => {",
+      "    if (isBlinking) {",
+      "      // Göz kırpma algılandı",
+      "      ${2:handleBlink}",
+      "    }",
+      "  }, [isBlinking]);",
+      "  ",
+      "  return (",
+      "    <div className=\"eyebridge-page\">",
+      "      ${3:/* Sayfa içeriği */}",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:PageName};"
+    ],
+    "description": "EyeBridge sayfa şablonu"
+=======
+  "EyeBridge Klavye Düzeni": {
+    "prefix": "keyboardlayout",
+    "body": [
+      "{",
+      "  \"name\": \"${1:Turkish}\",",
+      "  \"code\": \"${2:tr}\",",
+      "  \"layout\": [",
+      "    [\"${3:q}\", \"${4:w}\", \"${5:e}\", \"${6:r}\", \"${7:t}\", \"${8:y}\", \"${9:u}\", \"${10:i}\", \"${11:o}\", \"${12:p}\"],",
+      "    [\"${13:a}\", \"${14:s}\", \"${15:d}\", \"${16:f}\", \"${17:g}\", \"${18:h}\", \"${19:j}\", \"${20:k}\", \"${21:l}\"],",
+      "    [\"${22:z}\", \"${23:x}\", \"${24:c}\", \"${25:v}\", \"${26:b}\", \"${27:n}\", \"${28:m}\"],",
+      "    [\"space\", \"backspace\", \"enter\"]",
+      "  ]",
+      "}"
+    ],
+    "description": "Yeni bir sanal klavye düzeni oluşturur"
+  },
+  "EyeBridge Supabase Sorgu": {
+    "prefix": "supaq",
+    "body": [
+      "const { data, error } = await supabase",
+      "  .from('${1:messages}')",
+      "  .select('${2:*)}'",
+      "  .eq('${3:user_id}', ${4:userId});",
+      "",
+      "if (error) console.error(error);",
+      "else console.log(data);"
+    ],
+    "description": "Supabase sorgu şablonu"
+  },
+  "EyeBridge Çeviri Fonksiyonu": {
+    "prefix": "translate",
+    "body": [
+      "const translateText = async (text, targetLang) => {",
+      "  try {",
+      "    const response = await fetch('${1:VITE_TRANSLATE_API_URL}/translate', {",
+      "      method: 'POST',",
+      "      headers: { 'Content-Type': 'application/json' },",
+      "      body: JSON.stringify({",
+      "        q: text,",
+      "        source: 'auto',",
+      "        target: targetLang,",
+      "        format: 'text'",
+      "      })",
+      "    });",
+      "    const data = await response.json();",
+      "    return data.translatedText;",
+      "  } catch (error) {",
+      "    console.error('Translation failed:', error);",
+      "    return text;",
+      "  }",
+      "};"
+    ],
+    "description": "LibreTranslate ile çeviri yapar"
+>>>>>>> fb73d5308d231c707b560c5be8dc80375a7af1d3
+  }
+}

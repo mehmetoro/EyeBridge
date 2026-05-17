@@ -332,6 +332,7 @@ export function useWebGazerBridge() {
   const manualHoldPointRef = useRef(null)
   const manualHoldUntilRef = useRef(0)
   const lastManualTargetRef = useRef(null)
+  const lastBlinkEventRef = useRef(0)
 
   const dispatchGaze = useCallback((x, y) => {
     const now = Date.now()
@@ -436,7 +437,7 @@ export function useWebGazerBridge() {
       minFaceDetectionConfidence: 0.5,
       minFacePresenceConfidence: 0.5,
       minTrackingConfidence: 0.5,
-      outputFaceBlendshapes: false,
+      outputFaceBlendshapes: true,
       outputFacialTransformationMatrixes: false,
     })
 
@@ -635,6 +636,20 @@ export function useWebGazerBridge() {
       const faceLandmarks = result?.faceLandmarks?.[0]
       if (faceLandmarks) {
         emitPrediction(faceLandmarks)
+      }
+
+      const faceBlendshapes = result?.faceBlendshapes?.[0]?.categories
+      if (faceBlendshapes) {
+        const leftBlink = faceBlendshapes.find(c => c.categoryName === 'eyeBlinkLeft')?.score || 0
+        const rightBlink = faceBlendshapes.find(c => c.categoryName === 'eyeBlinkRight')?.score || 0
+
+        if (leftBlink > 0.45 && rightBlink > 0.45) {
+          const now = Date.now()
+          if (now - lastBlinkEventRef.current > 700) {
+            lastBlinkEventRef.current = now
+            window.dispatchEvent(new CustomEvent('eyebridge:blink'))
+          }
+        }
       }
     } catch (error) {
       setLastError(error?.message || 'unknown')

@@ -183,9 +183,12 @@ export function useGazeInteraction({
       setDwellProgress(progress)
 
       const isBlinkAction = nextElement.getAttribute('data-blink-action') === 'true'
-      const cooldownElapsed = now - lastActivationRef.current > 500
+      const isInstantAction = nextElement.getAttribute('data-instant-action') === 'true'
+      
+      const cooldownTime = isInstantAction ? 300 : 500
+      const cooldownElapsed = now - lastActivationRef.current > cooldownTime
 
-      if (isBlinkAction && progress >= 1 && cooldownElapsed) {
+      if ((isInstantAction || (isBlinkAction && progress >= 1)) && cooldownElapsed) {
         triggerAction(nextElement, 'dwell')
       }
 

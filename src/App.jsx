@@ -34,6 +34,7 @@ const EXAMPLE_POSTS = [
 ]
 
 const EXAMPLE_GAMES = [
+  { id: 'tetris', name: 'Tetris', summary: 'Efsanevi blok dizme oyunu', type: 'tetris' },
   { id: 1, name: 'Hızlı Tuşlar', summary: 'Doğru tuşa hızlıca basıyorsunuz', type: 'timing' },
   { id: 2, name: 'Bellek Oyunu', summary: 'Desenleri hatırlamaya çalışın', type: 'memory' },
   { id: 3, name: 'Renk Eşleştirme', summary: 'Aynı renkli çiftleri bulun', type: 'matching' },
@@ -607,8 +608,8 @@ function App() {
       }
 
       if (action.startsWith('OPEN_GAME_')) {
-        const gameId = Number(action.replace('OPEN_GAME_', ''))
-        const selectedGame = EXAMPLE_GAMES.find((game) => game.id === gameId)
+        const rawId = action.replace('OPEN_GAME_', '')
+        const selectedGame = EXAMPLE_GAMES.find((game) => String(game.id) === rawId)
         if (selectedGame) {
           setActiveGame(selectedGame)
           beep(700, 70)
@@ -835,6 +836,7 @@ function App() {
           <GameDetailPage
             game={activeGame}
             labels={pageUi}
+            settings={calibrationSettings}
             footerActions={[
               { id: 'game-detail-home', action: 'SURFACE_HOME', label: 'Ana Sayfa', onClick: () => { setActiveGame(null); openSurface('home') }, isFocused: focusedId === 'game-detail-home' },
             ]}
